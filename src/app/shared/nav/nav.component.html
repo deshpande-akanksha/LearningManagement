@@ -1,0 +1,48 @@
+<app-top-bar *ngIf="isAuthenticated()" (toggleSidenav)="navigationSidenav.toggle()"></app-top-bar>
+
+<mat-sidenav-container autosize>
+
+  <mat-sidenav #navigationSidenav mode="over" role="navigation">
+
+    <mat-toolbar>
+      <mat-toolbar-row>
+        <h2 class="toolbar-title">Learning Management System</h2>
+      </mat-toolbar-row>
+    </mat-toolbar>
+
+    <mat-nav-list>
+
+      <ng-container *ngIf="courseRoutes">
+
+        <h2 matSubheader>Courses</h2>
+
+        <a mat-list-item routerLink="/" style="height: 0;"></a>
+
+        <ng-container *ngFor="let item of courseRoutes">
+          <a
+            *ngIf="item.visible"
+            mat-list-item
+            (click)="navigationSidenav.close()"
+            [routerLink]="[item.route]"
+            routerLinkActive="list-item-active"
+          >
+            <mat-icon matListIcon class="nav-list-icon"> {{ item.icon }} </mat-icon>
+            {{item.title}}
+          </a>
+        </ng-container>
+
+        <mat-divider></mat-divider>
+
+      </ng-container>
+
+    </mat-nav-list>
+
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <main role="main" class="container">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
